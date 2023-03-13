@@ -31,10 +31,6 @@ bot.api.setMyCommands([
         description: 'Show help message'
     },
     {
-        command: 'talk',
-        description: 'Поговорить с ботом'
-    },
-    {
         command: 'clean',
         description: 'Очистить беседы'
     }
