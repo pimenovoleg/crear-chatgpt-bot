@@ -24,6 +24,17 @@ try {
     log('There was an error during command loading:', error);
 }
 
+bot.api.setMyCommands([
+    {
+        command: 'start',
+        description: 'Start bot'
+    },
+    {
+        command: 'help',
+        description: 'Show help message'
+    }
+]);
+
 bot.on('message', async (ctx) => {
     const chatId = ctx.chat.id;
     const msgLower = ctx.msg.text?.toLowerCase();
@@ -88,8 +99,14 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.json());
     app.use(webhookCallback(bot, 'express'));
 
-    app.listen(port, () => {
-        console.log(`Express server is listening on ${port}`);
+    const server = app.listen(port, () => {
+        log(`Express server is listening on ${port}`);
+    });
+
+    process.on('SIGTERM', async () => {
+        server.close();
+        await bot.stop();
+        process.exit(0);
     });
 } else {
     bot.start();
