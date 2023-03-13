@@ -8,6 +8,7 @@ import { log } from './utils/log.js';
 import fs from 'fs';
 import { Bot, InputFile, webhookCallback } from 'grammy';
 import express from 'express';
+import { getText } from './services/openai.js';
 
 const bot = new Bot(process.env.TELEGRAM_TOKEN);
 
@@ -26,12 +27,16 @@ try {
 
 bot.api.setMyCommands([
     {
-        command: 'start',
-        description: 'Start bot'
-    },
-    {
         command: 'help',
         description: 'Show help message'
+    },
+    {
+        command: 'talk',
+        description: 'Поговорить с ботом'
+    },
+    {
+        command: 'clean',
+        description: 'Очистить беседы'
     }
 ]);
 
@@ -61,10 +66,13 @@ bot.on('message', async (ctx) => {
             log(error);
             ctx.reply('There was an error while executing this command!');
         }
+        return;
     }
 
     if (msgLower.startsWith('нарисуй') || msgLower.startsWith('draw')) {
         await textToVisual(chatId, msgLower, ctx.from?.language_code);
+    } else {
+        await getText(ctx);
     }
 });
 
