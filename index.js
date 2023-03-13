@@ -6,7 +6,7 @@ import { getPic } from './services/stability.js';
 import { log } from './utils/log.js';
 
 import fs from 'fs';
-import { Bot, webhookCallback } from 'grammy';
+import { Bot, InputFile, webhookCallback } from 'grammy';
 import express from 'express';
 
 const bot = new Bot(process.env.TELEGRAM_TOKEN);
@@ -58,7 +58,7 @@ bot.on('message', async (ctx) => {
 });
 
 const textToVisual = async (chatId, text, language_code) => {
-    await bot.sendChatAction(chatId, 'typing');
+    await bot.api.sendChatAction(chatId, 'typing');
 
     // if (
     //     process.env.GOOGLE_KEY &&
@@ -74,12 +74,7 @@ const textToVisual = async (chatId, text, language_code) => {
                 : ', deep focus, highly detailed, digital painting, artstation, 4K, smooth, sharp focus, illustration')
     );
 
-    const fileOptions = {
-        filename: 'image',
-        contentType: 'image/png'
-    };
-
-    await bot.sendPhoto(chatId, photo, fileOptions);
+    await bot.api.sendPhoto(chatId, new InputFile(photo, 'image'));
 };
 
 bot.catch((error) => {
