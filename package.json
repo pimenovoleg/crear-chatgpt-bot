@@ -1,5 +1,5 @@
 {
-    "name": "tgbot-chatgpt",
+    "name": "crear-tgbot-chatgpt",
     "version": "1.0.0",
     "description": "Telegram Bot with OpenAI GPT-3.5-turbo",
     "main": "index.js",

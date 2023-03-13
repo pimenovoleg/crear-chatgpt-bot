@@ -37,38 +37,42 @@ bot.api.setMyCommands([
 ]);
 
 bot.on('message', async (ctx) => {
-    const chatId = ctx.chat.id;
-    const msgLower = ctx.msg.text?.toLowerCase();
+    try {
+        const chatId = ctx.chat.id;
+        const msgLower = ctx.msg.text?.toLowerCase();
 
-    log(`${ctx.chat.username || ctx.chat.first_name} (${chatId}): ${msgLower}`);
+        log(`${ctx.chat.username || ctx.chat.first_name} (${chatId}): ${msgLower}`);
 
-    const entities = ctx.entities();
+        const entities = ctx.entities();
 
-    if (entities.length > 0) {
-        const command = bot.commands.get(msgLower.substring(1, entities[0].length));
+        if (entities.length > 0) {
+            const command = bot.commands.get(msgLower.substring(1, entities[0].length));
 
-        if (!command) return;
+            if (!command) return;
 
-        Object.assign(ctx, {
-            ...ctx,
-            bot: bot,
-            reply: (text, options = {}) => bot.api.sendMessage(chatId, text, options),
-            argStr: msgLower.substring(entities[0].length + 1, msgLower.length)
-        });
+            Object.assign(ctx, {
+                ...ctx,
+                bot: bot,
+                reply: (text, options = {}) => bot.api.sendMessage(chatId, text, options),
+                argStr: msgLower.substring(entities[0].length + 1, msgLower.length)
+            });
 
-        try {
-            command.run(ctx);
-        } catch (error) {
-            log(error);
-            ctx.reply('There was an error while executing this command!');
+            try {
+                command.run(ctx);
+            } catch (error) {
+                log(error);
+                ctx.reply('There was an error while executing this command!');
+            }
+            return;
         }
-        return;
-    }
 
-    if (msgLower.startsWith('нарисуй') || msgLower.startsWith('draw')) {
-        await textToVisual(chatId, msgLower, ctx.from?.language_code);
-    } else {
-        await getText(ctx);
+        if (msgLower.startsWith('нарисуй') || msgLower.startsWith('draw')) {
+            await textToVisual(chatId, msgLower, ctx.from?.language_code);
+        } else {
+            await getText(ctx);
+        }
+    } catch (e) {
+        log(e.message);
     }
 });
 
