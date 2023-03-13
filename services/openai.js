@@ -24,9 +24,12 @@ export const getText = async (ctx) => {
     await ctx.api.sendChatAction(ctx.message.from.id, 'typing');
 
     if (lastConversation) {
+        lastConversation.timeoutMs = 2 * 60 * 1000;
         response = await openai.sendMessage(msg, lastConversation);
     } else {
-        response = await openai.sendMessage(msg);
+        response = await openai.sendMessage(msg, {
+            timeoutMs: 2 * 60 * 1000
+        });
     }
     const end = Date.now() - start;
 
