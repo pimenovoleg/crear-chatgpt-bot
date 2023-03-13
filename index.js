@@ -6,25 +6,10 @@ import { getPic } from './services/stability.js';
 import { log } from './utils/log.js';
 
 import fs from 'fs';
-import TelegramBot from 'node-telegram-bot-api';
+import { Bot, webhookCallback } from 'grammy';
 import express from 'express';
 
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
-
-if (process.env.NODE_ENV === 'production') {
-    const port = process.env.SERVER_PORT;
-    const app = express();
-
-    app.use(express.json());
-    app.post(`/bot${process.env.TELEGRAM_TOKEN}`, (req, res) => {
-        bot.processUpdate(req.body);
-        res.sendStatus(200);
-    });
-
-    app.listen(port, () => {
-        console.log(`Express server is listening on ${port}`);
-    });
-}
+const bot = new Bot(process.env.TELEGRAM_TOKEN);
 
 bot.commands = new Map();
 
@@ -39,34 +24,36 @@ try {
     log('There was an error during command loading:', error);
 }
 
-bot.on('message', async (msg) => {
-    const chatId = msg.chat.id;
-    const msgLower = msg.text?.toLowerCase();
+bot.on('message', async (ctx) => {
+    const chatId = ctx.chat.id;
+    const msgLower = ctx.msg.text?.toLowerCase();
 
-    log(`${msg.chat.username || msg.chat.first_name} (${chatId}): ${msgLower}`);
+    log(`${ctx.chat.username || ctx.chat.first_name} (${chatId}): ${msgLower}`);
 
-    if (msg.entities) {
-        const command = bot.commands.get(msgLower.substring(1, msg.entities[0].length));
+    const entities = ctx.entities();
+
+    if (entities.length > 0) {
+        const command = bot.commands.get(msgLower.substring(1, entities[0].length));
 
         if (!command) return;
 
-        Object.assign(msg, {
-            ...msg,
+        Object.assign(ctx, {
+            ...ctx,
             bot: bot,
-            reply: (text, options = {}) => bot.sendMessage(chatId, text, options),
-            argStr: msgLower.substring(msg.entities[0].length + 1, msgLower.length)
+            reply: (text, options = {}) => bot.api.sendMessage(chatId, text, options),
+            argStr: msgLower.substring(entities[0].length + 1, msgLower.length)
         });
 
         try {
-            command.run(msg);
+            command.run(ctx);
         } catch (error) {
             log(error);
-            msg.reply('There was an error while executing this command!');
+            ctx.reply('There was an error while executing this command!');
         }
     }
 
     if (msgLower.startsWith('нарисуй') || msgLower.startsWith('draw')) {
-        await textToVisual(chatId, msgLower, msg.from?.language_code);
+        await textToVisual(chatId, msgLower, ctx.from?.language_code);
     }
 });
 
@@ -95,5 +82,20 @@ const textToVisual = async (chatId, text, language_code) => {
     await bot.sendPhoto(chatId, photo, fileOptions);
 };
 
-bot.on('polling_error', (error) => log(error));
-bot.on('webhook_error', (error) => log(error));
+bot.catch((error) => {
+    log('ERROR on handling update occurred', error);
+});
+
+if (process.env.NODE_ENV === 'production') {
+    const port = process.env.SERVER_PORT;
+    const app = express();
+
+    app.use(express.json());
+    app.use(webhookCallback(bot, 'express'));
+
+    app.listen(port, () => {
+        console.log(`Express server is listening on ${port}`);
+    });
+} else {
+    bot.start();
+}
