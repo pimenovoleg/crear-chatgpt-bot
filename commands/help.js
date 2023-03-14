@@ -5,10 +5,7 @@ export default {
     },
 
     run(ctx) {
-        const language_code = ctx.from?.language_code;
-        const output =
-            language_code === 'ru' ? 'Нарисуй <что-то>\nЗагугли/Погугли <что-то>' : 'Draw <some>\nGoogle <some>';
-
+        const output = 'задай <любой вопрос>\nПопроси написать код\nDraw <something> (только на EN)';
         ctx.reply(output);
     }
 };
