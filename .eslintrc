@@ -1,39 +1,71 @@
 {
-    "extends": ["eslint:recommended", "plugin:import/recommended", "plugin:eslint-comments/recommended", "prettier"],
-    "plugins": ["simple-import-sort", "unused-imports"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:import/recommended",
+        "plugin:eslint-comments/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "simple-import-sort",
+        "unused-imports"
+    ],
+    "parser": "@typescript-eslint/parser",
     "rules": {
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
         "import/newline-after-import": "error",
-        "import/no-duplicates": "error"
+        "import/no-duplicates": "error",
+        "import/prefer-default-export": "off",
+        "import/extensions": "off"
     },
     "env": {
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "reportUnusedDisableDirectives": true,
-    "ignorePatterns": ["!.*.js"],
+    "ignorePatterns": [
+        "!.*.js"
+    ],
     "settings": {
-        "import/resolver": { "node": {} }
+        "import/resolver": {
+            "typescript": {
+                "extensions": [".js", ".ts"]
+            }
+        }
     },
     "parserOptions": {
-        "sourceType": "module",
-        "ecmaVersion": 2021
+        "project": [
+            "tsconfig.json"
+        ]
     },
     "overrides": [
         // override "simple-import-sort" config
         {
-            "files": ["*.js"],
+            "files": [
+                "*.js"
+            ],
             "rules": {
                 "simple-import-sort/imports": [
                     "error",
                     {
                         "groups": [
                             // Side effect imports.
-                            ["^\\u0000"],
+                            [
+                                "^\\u0000"
+                            ],
                             // Parent imports. Put `..` last.
-                            ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+                            [
+                                "^\\.\\.(?!/?$)",
+                                "^\\.\\./?$"
+                            ],
                             // Other relative imports. Put same-folder imports and `.` last.
-                            ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
+                            [
+                                "^\\./(?=.*/)(?!/?$)",
+                                "^\\.(?!/?$)",
+                                "^\\./?$"
+                            ]
                         ]
                     }
                 ]

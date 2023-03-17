@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export const getPic = async (prompt) => {
+export const getPic = async (prompt: string) => {
     const response = await fetch(
         'https://api.stability.ai/v1alpha/generation/stable-diffusion-512-v2-1/text-to-image',
         {
@@ -8,7 +8,7 @@ export const getPic = async (prompt) => {
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'image/png',
-                Authorization: process.env.STABILITY_KEY
+                Authorization: process.env.STABILITY_KEY || ''
             },
             body: JSON.stringify({
                 cfg_scale: 7,
