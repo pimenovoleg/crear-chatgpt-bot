@@ -1,2 +1,1 @@
-# crear-chatgpt-bot
-Chatgpt Telegram bot
+# 🤖 Crear ChatGPT Telegram Bot

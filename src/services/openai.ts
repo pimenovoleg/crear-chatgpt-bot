@@ -1,7 +1,7 @@
 import { type ChatMessage, ChatGPTAPI } from 'chatgpt';
 import dotenv from 'dotenv';
 
-import { Context } from '~/bot/context';
+import { Context } from '@/bot/context';
 
 dotenv.config();
 

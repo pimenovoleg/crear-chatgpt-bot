@@ -1,5 +1,5 @@
-import { createBot } from '~/bot';
-import { createServer } from '~/server';
+import { createBot } from '@/bot';
+import { createServer } from '@/server';
 
 import { container } from './container';
 

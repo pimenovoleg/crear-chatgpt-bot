@@ -2,9 +2,9 @@ import { chatAction } from '@grammyjs/auto-chat-action';
 import { addReplyParam } from '@roziscoding/grammy-autoquote';
 import { Composer, InputFile } from 'grammy';
 
-import { Context } from '~/bot/context';
-import { logHandle } from '~/bot/helpers/logging';
-import { getPic } from '~/services/stability';
+import { Context } from '@/bot/context';
+import { logHandle } from '@/bot/helpers/logging';
+import { getPic } from '@/services/stability';
 
 const composer = new Composer<Context>();
 const feature = composer.chatType(['private', 'group']);

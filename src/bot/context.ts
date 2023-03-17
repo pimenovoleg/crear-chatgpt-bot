@@ -5,8 +5,8 @@ import { ParseModeFlavor } from '@grammyjs/parse-mode';
 import { Update, UserFromGetMe } from '@grammyjs/types';
 import { Api, Context as DefaultContext } from 'grammy';
 
-import type { Container } from '~/container';
-import { Logger } from '~/utils/log';
+import type { Container } from '@/container';
+import { Logger } from '@/utils/log';
 
 type ExtendedContextFlavor = {
     container: Container;

@@ -3,12 +3,12 @@ import { hydrate } from '@grammyjs/hydrate';
 import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
 import { Bot as TelegramBot, BotConfig, Context } from 'grammy';
 
-import { chatCommand, startCommand } from '~/bot/commands';
-import { drawCommand } from '~/bot/commands/draw.command';
-import { createContextConstructor } from '~/bot/context';
-import { errorHandler } from '~/bot/handlers';
-import { i18n, updateLogger } from '~/bot/middlewares';
-import { Container } from '~/container';
+import { chatCommand, startCommand } from '@/bot/commands';
+import { drawCommand } from '@/bot/commands/draw.command';
+import { createContextConstructor } from '@/bot/context';
+import { errorHandler } from '@/bot/handlers';
+import { i18n, updateLogger } from '@/bot/middlewares';
+import { Container } from '@/container';
 
 type Dependencies = {
     container: Container;

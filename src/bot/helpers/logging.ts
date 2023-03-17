@@ -1,6 +1,6 @@
 import { Middleware } from 'grammy';
 
-import type { Context } from '~/bot/context';
+import type { Context } from '@/bot/context';
 
 const getChatInfo = (ctx: Context) => {
     if (ctx.chat != null) {

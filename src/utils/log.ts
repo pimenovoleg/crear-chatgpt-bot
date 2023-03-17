@@ -1,6 +1,6 @@
 import pino, { type DestinationStream, type LoggerOptions } from 'pino';
 
-import { Config } from '~/config';
+import { Config } from '@/config';
 
 export const createLogger = (config: Config) => {
     const options: LoggerOptions = {

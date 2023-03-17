@@ -2,8 +2,8 @@ import { addReplyParam } from '@roziscoding/grammy-autoquote';
 import { Composer } from 'grammy';
 import stripIndent from 'strip-indent';
 
-import { Context } from '~/bot/context';
-import { logHandle } from '~/bot/helpers/logging';
+import { Context } from '@/bot/context';
+import { logHandle } from '@/bot/helpers/logging';
 
 const composer = new Composer<Context>();
 const feature = composer.chatType(['private', 'group']);

@@ -1,9 +1,9 @@
 import fastify from 'fastify';
 import { BotError, webhookCallback } from 'grammy';
 
-import type { Bot } from '~/bot';
-import { errorHandler } from '~/bot/handlers';
-import type { Container } from '~/container';
+import type { Bot } from '@/bot';
+import { errorHandler } from '@/bot/handlers';
+import type { Container } from '@/container';
 
 export const createServer = async (bot: Bot, container: Container) => {
     const { logger } = container.items;
