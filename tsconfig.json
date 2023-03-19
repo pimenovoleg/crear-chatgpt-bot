@@ -1,32 +1,33 @@
 {
     "compilerOptions": {
-        "strict": true,
-        "allowJs": true,
-        "skipLibCheck": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
         "esModuleInterop": true,
-        "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "forceConsistentCasingInFileNames": true,
-        "module": "CommonJS",
+        "experimentalDecorators": true,
+        "useUnknownInCatchVariables": true,
+        "strict": true,
+        "incremental": true,
+        "module": "commonjs",
+        "target": "es2018",
         "moduleResolution": "node",
-        "target": "ESNext",
         "sourceMap": true,
-        "outDir": "./dist",
-        "baseUrl": "src",
+        "outDir": "dist",
+        "baseUrl": "./",
+        "skipLibCheck": true,
+        "noEmit": false,
         "paths": {
-            "@/*": [
-                "*"
-            ]
-        },
-        "typeRoots": [
-            "node_modules/@types"
-        ]
+            "@/*": ["./src/*"]
+        }
     },
     "exclude": [
         "node_modules",
         "dist"
     ],
     "include": [
-        "src/**/*"
+        "src/**/*.ts"
     ]
 }

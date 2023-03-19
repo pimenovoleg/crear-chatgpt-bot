@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { createBot } from '@/bot';
 import { createServer } from '@/server';
 
