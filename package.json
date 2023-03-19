@@ -10,8 +10,8 @@
     "scripts": {
         "clean": "rimraf dist",
         "build": "npm run clean && tsc --project ./tsconfig.json",
-        "start": "tsx ./src/main.ts",
-        "start:prod": "node dist/main.js"
+        "start:dev": "tsx ./src/main.ts",
+        "start": "node dist/main.js"
     },
     "author": "Oleg Pimenov",
     "license": "MIT",
