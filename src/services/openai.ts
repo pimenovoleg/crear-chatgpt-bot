@@ -5,11 +5,11 @@ import { Context } from '@/bot/context';
 
 dotenv.config();
 
-const openai = new ChatGPTAPI({
-    apiKey: process.env.CHATGPT_API_KEY || ''
-});
-
 export const getText = async (ctx: Context): Promise<string> => {
+    const openai = new ChatGPTAPI({
+        apiKey: process.env.CHATGPT_API_KEY || ''
+    });
+
     const msg = ctx.message?.text || '';
 
     const response: ChatMessage = await openai.sendMessage(msg, {

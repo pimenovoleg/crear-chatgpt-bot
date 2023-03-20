@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export const getPic = async (prompt: string) => {
     const response = await fetch(
         'https://api.stability.ai/v1alpha/generation/stable-diffusion-512-v2-1/text-to-image',
@@ -32,5 +30,6 @@ export const getPic = async (prompt: string) => {
         return;
     }
 
-    return response.buffer();
+    const arrayBuffer = await response.arrayBuffer();
+    return Buffer.from(arrayBuffer);
 };
