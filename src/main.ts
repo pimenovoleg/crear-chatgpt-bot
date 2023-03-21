@@ -1,7 +1,7 @@
 import 'module-alias/register';
 
 import express from 'express';
-import { webhookCallback } from 'grammy';
+import { MemorySessionStorage, webhookCallback } from 'grammy';
 
 import { createBot } from '@/bot';
 
@@ -11,7 +11,8 @@ async function main() {
     const { config, logger } = container.items;
 
     const bot = createBot(config.BOT_TOKEN, {
-        container
+        container,
+        sessionStorage: new MemorySessionStorage()
     });
 
     if (config.isProd) {
