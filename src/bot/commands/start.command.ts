@@ -1,6 +1,5 @@
 import { addReplyParam } from '@roziscoding/grammy-autoquote';
 import { Composer } from 'grammy';
-import stripIndent from 'strip-indent';
 
 import { Context } from '@/bot/context';
 import { logHandle } from '@/bot/helpers/logging';
@@ -14,13 +13,13 @@ feature.command('start', logHandle('command-start'), async (ctx) => {
     }
 
     await ctx.reply(
-        stripIndent(`
+        `
 	${ctx.t('start_command.hello')}
     ${
         ctx.chat.type === 'private'
             ? 'Simply send messages to chat.'
             : 'Use /chat **message** or reply to my messages to chat.'
-    }`)
+    }`
     );
 });
 

@@ -18,7 +18,6 @@ async function main() {
 
     if (config.isProd) {
         await server.listen({
-            host: config.BOT_SERVER_HOST,
             port: config.BOT_SERVER_PORT
         });
 

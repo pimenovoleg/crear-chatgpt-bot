@@ -1,3 +1,4 @@
+import fastifyCors from '@fastify/cors';
 import fastify from 'fastify';
 import { BotError, webhookCallback } from 'grammy';
 
@@ -9,8 +10,11 @@ export const createServer = async (bot: Bot, container: Container) => {
     const { logger } = container.items;
 
     const server = fastify({
-        logger
+        logger,
+        trustProxy: true
     });
+
+    server.register(fastifyCors, { origin: '*' });
 
     server.setErrorHandler(async (error, req, res) => {
         if (error instanceof BotError) {
@@ -24,7 +28,7 @@ export const createServer = async (bot: Bot, container: Container) => {
         }
     });
 
-    server.post(`/${bot.token}`, webhookCallback(bot, 'fastify'));
+    server.post(`/${bot.token}`, webhookCallback(bot, 'fastify', { timeoutMilliseconds: 30000 }));
 
     return server;
 };
