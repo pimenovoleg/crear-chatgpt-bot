@@ -1,2 +1,3 @@
-export * from './chat.command';
+export * from './draw.command';
+export * from './question.command';
 export * from './start.command';

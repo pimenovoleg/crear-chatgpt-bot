@@ -3,8 +3,7 @@ import { hydrate } from '@grammyjs/hydrate';
 import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
 import { Bot as TelegramBot, BotConfig, Context } from 'grammy';
 
-import { chatCommand, startCommand } from '@/bot/commands';
-import { drawCommand } from '@/bot/commands/draw.command';
+import { drawCommand, questionCommand, startCommand } from '@/bot/commands';
 import { createContextConstructor } from '@/bot/context';
 import { errorHandler } from '@/bot/handlers';
 import { i18n, updateLogger } from '@/bot/middlewares';
@@ -29,7 +28,8 @@ export const createBot = (
 
     bot.api.setMyCommands([
         { command: 'start', description: 'Start the bot' },
-        { command: 'chat', description: 'Chat with OpenAI' },
+        { command: 'q', description: 'Ask question OpenAI' },
+        { command: 'chat', description: 'Start conversation with OpenAI' },
         { command: 'draw', description: 'Draw images' }
     ]);
 
@@ -43,7 +43,7 @@ export const createBot = (
     bot.use(i18n());
 
     bot.use(startCommand);
-    bot.use(chatCommand);
+    bot.use(questionCommand);
     bot.use(drawCommand);
 
     if (config.isDev) {

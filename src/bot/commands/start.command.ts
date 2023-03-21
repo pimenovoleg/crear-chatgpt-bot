@@ -18,7 +18,7 @@ feature.command('start', logHandle('command-start'), async (ctx) => {
     ${
         ctx.chat.type === 'private'
             ? 'Simply send messages to chat.'
-            : 'Use /chat **message** or reply to my messages to chat.'
+            : 'Use /question **message** or reply to my messages to chat.'
     }`
     );
 });
