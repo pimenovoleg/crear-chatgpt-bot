@@ -19,7 +19,7 @@ feature.command('q', logHandle('command-question'), chatAction('typing'), async 
         model: 'text-davinci-003',
         temperature: 0.5,
         max_tokens: getRandomTokens(),
-        prompt: 'вопросик есть?'
+        prompt: ctx.message.text
     });
 
     const response = completion.data.choices[0].text;
