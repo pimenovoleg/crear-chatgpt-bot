@@ -1,7 +1,9 @@
 import 'module-alias/register';
 
+import express from 'express';
+import { webhookCallback } from 'grammy';
+
 import { createBot } from '@/bot';
-import { createServer } from '@/server';
 
 import { container } from './container';
 
@@ -12,19 +14,24 @@ async function main() {
         container
     });
 
-    await bot.init();
-
-    const server = await createServer(bot, container);
-
     if (config.isProd) {
-        await server.listen({
-            port: config.BOT_SERVER_PORT
-        });
+        await bot.api.setWebhook(`${config.BOT_WEBHOOK}`);
 
-        await bot.api.setWebhook(config.BOT_WEBHOOK, {
-            allowed_updates: config.BOT_ALLOWED_UPDATES
+        const app = express();
+        app.use(express.json());
+
+        app.use(
+            webhookCallback(bot, 'express', { onTimeout: () => console.log('timeout'), timeoutMilliseconds: 45000 })
+        );
+
+        app.listen(config.BOT_SERVER_PORT, () => {
+            console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
         });
     } else if (config.isDev) {
+        await bot.api.deleteWebhook();
+
+        await bot.init();
+
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,
             onStart: ({ username }) =>
