@@ -1,5 +1,5 @@
 import { AutoChatActionFlavor } from '@grammyjs/auto-chat-action';
-import { Conversation, ConversationFlavor } from '@grammyjs/conversations';
+import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';
 import { ParseModeFlavor } from '@grammyjs/parse-mode';
@@ -28,8 +28,6 @@ export type Context = ParseModeFlavor<
             AutoChatActionFlavor
     >
 >;
-
-export type GrammyConversation = Conversation<Context>;
 
 export function createContextConstructor(container: Container) {
     return class extends DefaultContext implements ExtendedContextFlavor {

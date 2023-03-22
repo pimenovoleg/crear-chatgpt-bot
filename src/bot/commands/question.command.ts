@@ -12,7 +12,7 @@ feature.command('question', logHandle('command-question'), async (ctx) => {
         ctx.api.config.use(addReplyParam(ctx));
     }
 
-    await ctx.conversation.enter('questionOpenai');
+    await ctx.conversation.enter('question');
 });
 
 export { composer as questionCommand };

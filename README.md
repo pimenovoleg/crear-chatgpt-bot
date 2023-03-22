@@ -11,6 +11,7 @@
 
 ## Roadmap
 
+- [ ] Add Metrics collection (in [prometheus](https://prometheus.io/) format)
 - [ ] Add conversation chat
 - [ ] Add Google Translate
 - [ ] Subscriptions using **Stripe**

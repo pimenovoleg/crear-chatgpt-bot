@@ -2,12 +2,12 @@ import { autoChatAction } from '@grammyjs/auto-chat-action';
 import { conversations } from '@grammyjs/conversations';
 import { hydrate } from '@grammyjs/hydrate';
 import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
-import { Bot as TelegramBot, BotConfig, Composer, session, StorageAdapter } from 'grammy';
+import { Bot as TelegramBot, BotConfig, session, StorageAdapter } from 'grammy';
 
 import { drawCommand, questionCommand, startCommand } from '@/bot/commands';
 import { Context, createContextConstructor, SessionData } from '@/bot/context';
 import { drawConversation } from '@/bot/conversations/draw.conversation';
-import { questionOpenaiConversation } from '@/bot/conversations/question.openai';
+import { questionToOpenaiConversation } from '@/bot/conversations/question.openai';
 import { errorHandler } from '@/bot/handlers';
 import { i18n, updateLogger } from '@/bot/middlewares';
 import { Container } from '@/container';
@@ -51,12 +51,10 @@ export const createBot = (
         })
     );
     bot.use(conversations());
-    // conversations
-    const conversationComposer = new Composer<Context>();
-    conversationComposer.use(questionOpenaiConversation);
-    conversationComposer.use(drawConversation);
 
-    bot.use(conversationComposer);
+    // conversations
+    bot.use(questionToOpenaiConversation(container));
+    bot.use(drawConversation(container));
 
     bot.use(startCommand);
     bot.use(questionCommand);
