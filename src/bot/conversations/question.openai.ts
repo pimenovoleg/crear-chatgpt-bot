@@ -3,7 +3,7 @@ import { createConversation } from '@grammyjs/conversations';
 import { Context, GrammyConversation } from '@/bot/context';
 import { openai } from '@/services/openai';
 
-const getRandomTokens = () => Math.floor(512 / (Math.floor(Math.random() * 6) + 1));
+const getRandomTokens = () => Math.floor(1500 / (Math.floor(Math.random() * 6) + 1));
 
 async function questionOpenai(conversation: GrammyConversation, ctx: Context) {
     await ctx.replyWithChatAction('typing');

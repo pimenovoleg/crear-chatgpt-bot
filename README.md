@@ -1,15 +1,24 @@
 # 🤖 Crear ChatGPT Telegram Bot
 
+## About this project
 
-# Roadmap
+
+## Features
+
+- Bot written in **Grammy**
+- Validations using **Zod**
+- Written in **TypeScript**
+
+## Roadmap
 
 - [ ] Add conversation chat
 - [ ] Add Google Translate
-- [ ] Subscriptions using Stripe
+- [ ] Subscriptions using **Stripe**
 - [ ] Improve localization
 - [ ] Add tests
+- [ ] ORM using **Prisma**
 
-# Running Locally
+## Running Locally
 
 1. Install dependencies using npm:
 
@@ -29,6 +38,6 @@ npm run build
 npm run start:dev
 ```
 
-# License
+## License
 
 Licensed under the [MIT license](https://github.com/pimenovoleg/crear-chatgpt-bot/blob/main/LICENSE.md).
