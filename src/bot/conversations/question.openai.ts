@@ -3,8 +3,6 @@ import { createConversation } from '@grammyjs/conversations';
 import { Context, GrammyConversation } from '@/bot/context';
 import { openai } from '@/services/openai';
 
-const getRandomTokens = () => Math.floor(1500 / (Math.floor(Math.random() * 6) + 1));
-
 async function questionOpenai(conversation: GrammyConversation, ctx: Context) {
     await ctx.replyWithChatAction('typing');
 
@@ -19,7 +17,7 @@ async function questionOpenai(conversation: GrammyConversation, ctx: Context) {
     const completion = await openai.createCompletion({
         model: 'text-davinci-003',
         temperature: 0.5,
-        max_tokens: getRandomTokens(),
+        max_tokens: 4000,
         prompt: text
     });
 
