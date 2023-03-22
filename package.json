@@ -15,7 +15,7 @@
     },
     "scripts": {
         "build": "rimraf dist && tsc && tsc-alias",
-        "start": "npm run build && node dist/main.js",
+        "start": "node dist/main.js",
         "start:dev": "nodemon"
     },
     "dependencies": {
