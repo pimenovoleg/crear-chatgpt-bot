@@ -14,17 +14,19 @@ async function main() {
     });
 
     if (config.isProd) {
-        await bot.api.setWebhook(`${config.BOT_WEBHOOK}`);
-
         const app = express();
         app.use(express.json());
 
         app.use(
+            `/${config.BOT_TOKEN}`,
             webhookCallback(bot, 'express', { onTimeout: () => console.log('timeout'), timeoutMilliseconds: 45000 })
         );
 
-        app.listen(config.BOT_SERVER_PORT, () => {
+        app.listen(config.BOT_SERVER_PORT, async () => {
             console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
+            console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
+
+            await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_TOKEN}`);
         });
     } else if (config.isDev) {
         await bot.api.deleteWebhook();
