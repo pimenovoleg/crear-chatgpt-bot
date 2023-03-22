@@ -23,8 +23,6 @@ async function questionOpenai(conversation: GrammyConversation, ctx: Context) {
         prompt: text
     });
 
-    await ctx.replyWithChatAction('typing');
-
     const response = completion.data.choices[0].text;
     if (response) {
         await ctx.reply(response);

@@ -6,6 +6,7 @@ import { Bot as TelegramBot, BotConfig, Composer, session, StorageAdapter } from
 
 import { drawCommand, questionCommand, startCommand } from '@/bot/commands';
 import { Context, createContextConstructor, SessionData } from '@/bot/context';
+import { drawConversation } from '@/bot/conversations/draw.conversation';
 import { questionOpenaiConversation } from '@/bot/conversations/question.openai';
 import { errorHandler } from '@/bot/handlers';
 import { i18n, updateLogger } from '@/bot/middlewares';
@@ -53,6 +54,7 @@ export const createBot = (
     // conversations
     const conversationComposer = new Composer<Context>();
     conversationComposer.use(questionOpenaiConversation);
+    conversationComposer.use(drawConversation);
 
     bot.use(conversationComposer);
 
