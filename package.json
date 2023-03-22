@@ -8,20 +8,16 @@
         "name": "Oleg Pimenov",
         "twitter": "https://twitter.com/pimenovoleg"
     },
-    "main": "dist/main.js",
-    "type": "commonjs",
-    "_moduleAliases": {
-        "@": "dist"
-    },
+    "main": "main.js",
     "engines": {
         "npm": ">=8.0.0 <10.0.0",
         "node": ">=18.0.0 <19.0.0"
     },
     "scripts": {
         "clean": "rimraf dist",
-        "build": "npm run clean && tsc",
-        "start:dev": "tsx ./src/main.ts",
-        "start": "node dist/main.js"
+        "build": "npm run clean && tsc && tsc-alias",
+        "start": "npm run build && node dist/main.js",
+        "start:dev": "NODE_ENV=development nodemon"
     },
     "dependencies": {
         "@google-cloud/translate": "^7.2.0",
@@ -36,11 +32,9 @@
         "express": "^4.18.2",
         "grammy": "^1.15.3",
         "iti": "^0.6.0",
-        "module-alias": "^2.2.2",
         "openai": "^3.2.1",
         "pino": "^8.11.0",
         "pino-pretty": "^10.0.0",
-        "tsx": "^3.12.6",
         "zod": "^3.21.4"
     },
     "devDependencies": {
@@ -58,9 +52,14 @@
         "eslint-plugin-import": "^2.27.5",
         "eslint-plugin-simple-import-sort": "8.0.0",
         "eslint-plugin-unused-imports": "2.0.0",
+        "nodemon": "^2.0.21",
         "prettier": "^2.8.6",
         "rimraf": "^4.4.0",
-        "typescript": "4.9.5"
+        "ts-node": "^10.9.1",
+        "tsc-alias": "^1.8.4",
+        "tsconfig-paths": "^4.1.2",
+        "tslib": "^2.5.0",
+        "typescript": "5.0.2"
     },
     "keywords": [
         "openai",

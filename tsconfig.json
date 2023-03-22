@@ -3,25 +3,27 @@
         "lib": [
             "dom",
             "dom.iterable",
-            "esnext"
+            "es2020"
         ],
+        "typeRoots": ["node_modules/@types"],
+        "importHelpers": true,
         "esModuleInterop": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "useUnknownInCatchVariables": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "incremental": true,
+        "moduleResolution": "node",
         "module": "commonjs",
         "target": "es2020",
-        "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": "./",
+        "pretty": true,
+        "baseUrl": "src",
         "skipLibCheck": true,
         "noEmit": false,
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["*"]
         }
     },
     "exclude": [
