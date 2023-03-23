@@ -2,6 +2,7 @@ import express from 'express';
 import { MemorySessionStorage, webhookCallback } from 'grammy';
 
 import { createBot } from '@/bot';
+import { createServer } from '@/server';
 
 import { container } from './container';
 
@@ -13,13 +14,12 @@ async function main() {
         sessionStorage: new MemorySessionStorage()
     });
 
+    await bot.init();
+
+    const server = await createServer(bot, container);
+
     if (config.isProd) {
-        const app = express();
-        app.use(express.json());
-
-        app.use(`/${config.BOT_WEBHOOK_SECRET}`, webhookCallback(bot, 'express'));
-
-        app.listen(config.BOT_SERVER_PORT, async () => {
+        server.listen(config.BOT_SERVER_PORT, async () => {
             console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
             console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
 
@@ -27,8 +27,6 @@ async function main() {
         });
     } else if (config.isDev) {
         await bot.api.deleteWebhook();
-
-        await bot.init();
 
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,

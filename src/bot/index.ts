@@ -23,6 +23,7 @@ export const createBot = (
     botConfig?: Omit<BotConfig<Context>, 'ContextConstructor'>
 ) => {
     const { config } = container.items;
+
     const bot = new TelegramBot(token, {
         ...botConfig,
         ContextConstructor: createContextConstructor(container)
