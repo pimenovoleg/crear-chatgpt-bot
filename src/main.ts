@@ -17,16 +17,13 @@ async function main() {
         const app = express();
         app.use(express.json());
 
-        app.use(
-            `/${config.BOT_TOKEN}`,
-            webhookCallback(bot, 'express', { onTimeout: () => console.log('timeout'), timeoutMilliseconds: 45000 })
-        );
+        app.use(`/${config.BOT_WEBHOOK_SECRET}`, webhookCallback(bot, 'express'));
 
         app.listen(config.BOT_SERVER_PORT, async () => {
             console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
             console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
 
-            await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_TOKEN}`);
+            await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         });
     } else if (config.isDev) {
         await bot.api.deleteWebhook();

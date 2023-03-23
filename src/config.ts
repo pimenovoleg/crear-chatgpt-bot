@@ -31,6 +31,7 @@ const configSchema = z.object({
             return null;
         }
     }, z.array(z.enum(updates))),
+    BOT_WEBHOOK_SECRET: z.string(),
     BOT_TOKEN: z.string(),
     BOT_WEBHOOK: z.string().url()
 });
