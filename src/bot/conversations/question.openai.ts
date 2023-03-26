@@ -28,7 +28,7 @@ export const questionToOpenaiConversation = (container: Container) =>
 
         const response = completion.data.choices[0].text;
         if (response) {
-            await ctx.reply(response);
+            return await ctx.reply(response);
         }
 
         await ctx.reply('что-то пошло не так, возможно слишком сложный вопрос для бота');
