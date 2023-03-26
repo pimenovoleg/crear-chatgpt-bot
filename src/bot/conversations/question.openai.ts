@@ -30,4 +30,6 @@ export const questionToOpenaiConversation = (container: Container) =>
         if (response) {
             await ctx.reply(response);
         }
+
+        await ctx.reply('что-то пошло не так, возможно слишком сложный вопрос для бота');
     }, 'question');
