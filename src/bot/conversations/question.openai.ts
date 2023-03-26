@@ -16,12 +16,15 @@ export const questionToOpenaiConversation = (container: Container) =>
 
         await ctx.replyWithChatAction('typing');
 
-        const completion = await openai.createCompletion({
-            model: 'text-davinci-003',
-            temperature: 0.5,
-            max_tokens: 4000,
-            prompt: text
-        });
+        const completion = await openai.createCompletion(
+            {
+                model: 'text-davinci-003',
+                temperature: 0.5,
+                max_tokens: 4000,
+                prompt: text
+            },
+            { timeout: 20000 }
+        );
 
         const response = completion.data.choices[0].text;
         if (response) {
