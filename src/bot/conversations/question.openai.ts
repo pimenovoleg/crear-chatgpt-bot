@@ -31,5 +31,5 @@ export const questionToOpenaiConversation = (container: Container) =>
             return await ctx.reply(response);
         }
 
-        await ctx.reply('что-то пошло не так, возможно слишком сложный вопрос для бота');
+        await ctx.reply(ctx.t('error.smth_wrong'));
     }, 'question');

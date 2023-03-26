@@ -5,9 +5,11 @@ import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
 import { Bot as TelegramBot, BotConfig, session, StorageAdapter } from 'grammy';
 
 import { drawCommand, questionCommand, startCommand } from '@/bot/commands';
+import { translationCommand } from '@/bot/commands/translation.command';
 import { Context, createContextConstructor, SessionData } from '@/bot/context';
 import { drawConversation } from '@/bot/conversations/draw.conversation';
 import { questionToOpenaiConversation } from '@/bot/conversations/question.openai';
+import { translationConversation } from '@/bot/conversations/translation.conversation';
 import { errorHandler } from '@/bot/handlers';
 import { i18n, updateLogger } from '@/bot/middlewares';
 import { Container } from '@/container';
@@ -34,7 +36,8 @@ export const createBot = (
     bot.api.setMyCommands([
         { command: 'start', description: 'Start the bot' },
         { command: 'question', description: 'Ask question OpenAI' },
-        { command: 'draw', description: 'Draw images' }
+        { command: 'draw', description: 'Draw images' },
+        { command: 'translation', description: 'Перевод с RU на EN' }
     ]);
 
     if (config.isDev) {
@@ -56,10 +59,12 @@ export const createBot = (
     // conversations
     bot.use(questionToOpenaiConversation(container));
     bot.use(drawConversation(container));
+    bot.use(translationConversation(container));
 
     bot.use(startCommand);
     bot.use(questionCommand);
     bot.use(drawCommand);
+    bot.use(translationCommand);
 
     if (config.isDev) {
         bot.catch(errorHandler);
