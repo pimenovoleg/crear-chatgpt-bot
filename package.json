@@ -51,7 +51,7 @@
         "eslint-plugin-import": "^2.27.5",
         "eslint-plugin-simple-import-sort": "10.0.0",
         "eslint-plugin-unused-imports": "2.0.0",
-        "nodemon": "^2.0.21",
+        "nodemon": "^2.0.22",
         "prettier": "^2.8.6",
         "rimraf": "^4.4.0",
         "ts-node": "^10.9.1",
