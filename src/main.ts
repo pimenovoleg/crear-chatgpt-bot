@@ -1,4 +1,3 @@
-import { run } from '@grammyjs/runner';
 import { MemorySessionStorage } from 'grammy';
 
 import { createBot } from '@/bot';
@@ -14,29 +13,18 @@ async function main() {
         sessionStorage: new MemorySessionStorage()
     });
 
-    //const server = await createServer(bot, container);
+    const server = await createServer(bot, container);
+    await bot.init();
 
     if (config.isProd) {
-        // server.listen(config.BOT_SERVER_PORT, async () => {
-        //     console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
-        //     console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
-        //
-        //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
-        // });
-        await bot.api.deleteWebhook({ drop_pending_updates: true });
-        await bot.init();
+        server.listen(config.BOT_SERVER_PORT, async () => {
+            console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
+            console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
 
-        run(bot);
-
-        process.once('SIGINT', async () => {
-            logger.info('SIGINT');
-            await bot.api.deleteWebhook({ drop_pending_updates: true });
-        });
-        process.once('SIGTERM', async () => {
-            logger.info('SIGTERM');
-            await bot.api.deleteWebhook({ drop_pending_updates: true });
+            await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         });
     } else if (config.isDev) {
+        await bot.api.deleteWebhook({ drop_pending_updates: true });
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,
             onStart: ({ username }) =>

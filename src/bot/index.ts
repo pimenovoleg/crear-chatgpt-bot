@@ -2,16 +2,15 @@ import { autoChatAction } from '@grammyjs/auto-chat-action';
 import { conversations } from '@grammyjs/conversations';
 import { hydrate } from '@grammyjs/hydrate';
 import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
-import { sequentialize } from '@grammyjs/runner';
 import { Bot as TelegramBot, BotConfig, session, StorageAdapter } from 'grammy';
 
 import { drawCommand, questionCommand, startCommand, translationCommand } from '@/bot/commands';
-import { Context, createContextConstructor, getSessionKey, SessionData } from '@/bot/context';
+import { Context, createContextConstructor, SessionData } from '@/bot/context';
 import { drawConversation } from '@/bot/conversations/draw.conversation';
 import { questionToOpenaiConversation } from '@/bot/conversations/question.openai';
 import { translationConversation } from '@/bot/conversations/translation.conversation';
 import { errorHandler } from '@/bot/handlers';
-import { i18n, ignoreOldMessageUpdates, updateLogger } from '@/bot/middlewares';
+import { i18n, updateLogger } from '@/bot/middlewares';
 import { Container } from '@/container';
 import { openai } from '@/services/openai';
 
@@ -29,6 +28,9 @@ export const createBot = (
 
     const bot = new TelegramBot(token, {
         ...botConfig,
+        client: {
+            timeoutSeconds: 30000
+        },
         ContextConstructor: createContextConstructor(container)
     });
 
@@ -55,8 +57,6 @@ export const createBot = (
             getSessionKey: (ctx) => ctx.chat?.id?.toString()
         })
     );
-    bot.use(sequentialize(getSessionKey));
-    bot.use(ignoreOldMessageUpdates);
     bot.use(conversations());
 
     // conversations
