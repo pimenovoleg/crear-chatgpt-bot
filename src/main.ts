@@ -16,15 +16,15 @@ async function main() {
 
     await bot.init();
 
-    const server = await createServer(bot, container);
+    //const server = await createServer(bot, container);
 
     if (config.isProd) {
-        server.listen(config.BOT_SERVER_PORT, async () => {
-            console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
-            console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
-
-            // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
-        });
+        // server.listen(config.BOT_SERVER_PORT, async () => {
+        //     console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
+        //     console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
+        //
+        //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
+        // });
 
         run(bot);
     } else if (config.isDev) {

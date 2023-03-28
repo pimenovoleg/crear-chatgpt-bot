@@ -2,10 +2,11 @@ import { autoChatAction } from '@grammyjs/auto-chat-action';
 import { conversations } from '@grammyjs/conversations';
 import { hydrate } from '@grammyjs/hydrate';
 import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
+import { sequentialize } from '@grammyjs/runner';
 import { Bot as TelegramBot, BotConfig, session, StorageAdapter } from 'grammy';
 
 import { drawCommand, questionCommand, startCommand, translationCommand } from '@/bot/commands';
-import { Context, createContextConstructor, SessionData } from '@/bot/context';
+import { Context, createContextConstructor, getSessionKey, SessionData } from '@/bot/context';
 import { drawConversation } from '@/bot/conversations/draw.conversation';
 import { questionToOpenaiConversation } from '@/bot/conversations/question.openai';
 import { translationConversation } from '@/bot/conversations/translation.conversation';
@@ -54,6 +55,7 @@ export const createBot = (
             getSessionKey: (ctx) => ctx.from?.id?.toString()
         })
     );
+    bot.use(sequentialize(getSessionKey));
     bot.use(conversations());
 
     // conversations

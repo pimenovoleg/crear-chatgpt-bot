@@ -45,3 +45,7 @@ export function createContextConstructor(container: Container) {
         }
     } as unknown as new (update: Update, api: Api, me: UserFromGetMe) => Context;
 }
+
+export function getSessionKey(ctx: Context) {
+    return ctx.from === undefined ? undefined : `${ctx.from.id}`;
+}
