@@ -23,7 +23,7 @@ async function main() {
         //
         //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         // });
-
+        await bot.api.deleteWebhook({ drop_pending_updates: true });
         await bot.init();
 
         run(bot);
