@@ -4,8 +4,7 @@ import { hydrate } from '@grammyjs/hydrate';
 import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
 import { Bot as TelegramBot, BotConfig, session, StorageAdapter } from 'grammy';
 
-import { drawCommand, questionCommand, startCommand } from '@/bot/commands';
-import { translationCommand } from '@/bot/commands/translation.command';
+import { drawCommand, questionCommand, startCommand, translationCommand } from '@/bot/commands';
 import { Context, createContextConstructor, SessionData } from '@/bot/context';
 import { drawConversation } from '@/bot/conversations/draw.conversation';
 import { questionToOpenaiConversation } from '@/bot/conversations/question.openai';
@@ -13,6 +12,7 @@ import { translationConversation } from '@/bot/conversations/translation.convers
 import { errorHandler } from '@/bot/handlers';
 import { i18n, updateLogger } from '@/bot/middlewares';
 import { Container } from '@/container';
+import { openai } from '@/services/openai';
 
 type Dependencies = {
     container: Container;
@@ -69,6 +69,24 @@ export const createBot = (
     if (config.isDev) {
         bot.catch(errorHandler);
     }
+
+    bot.on('message:text', async (ctx: Context) => {
+        const text = ctx.msg?.text;
+
+        if (ctx.chat?.type === 'private' && text) {
+            await ctx.replyWithChatAction('typing');
+
+            const completion = await openai.createChatCompletion({
+                model: 'gpt-3.5-turbo',
+                max_tokens: 4000,
+                messages: [{ role: 'user', content: text }]
+            });
+            const response = completion.data.choices.at(0)?.message;
+            if (response) {
+                await ctx.reply(response.content);
+            }
+        }
+    });
 
     return bot;
 };
