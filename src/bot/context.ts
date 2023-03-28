@@ -47,5 +47,5 @@ export function createContextConstructor(container: Container) {
 }
 
 export function getSessionKey(ctx: Context) {
-    return ctx.from === undefined ? undefined : `${ctx.from.id}`;
+    return ctx.from === undefined ? undefined : `${ctx.chat?.id}`;
 }

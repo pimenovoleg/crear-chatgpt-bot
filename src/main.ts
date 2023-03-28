@@ -23,6 +23,8 @@ async function main() {
         //
         //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         // });
+        bot.api.deleteWebhook().catch((err) => console.log(err));
+
         await bot.init();
 
         const runner = run(bot);

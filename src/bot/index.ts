@@ -52,7 +52,7 @@ export const createBot = (
     bot.use(
         session({
             initial: (): SessionData => ({}),
-            getSessionKey: (ctx) => ctx.from?.id?.toString()
+            getSessionKey: (ctx) => ctx.chat?.id?.toString()
         })
     );
     bot.use(sequentialize(getSessionKey));
