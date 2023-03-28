@@ -24,7 +24,13 @@ async function main() {
         //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         // });
         await bot.init();
-        run(bot);
+
+        const runner = run(bot);
+
+        const stopRunner = () => runner.isRunning() && runner.stop();
+
+        process.once('SIGINT', stopRunner);
+        process.once('SIGTERM', stopRunner);
     } else if (config.isDev) {
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,
