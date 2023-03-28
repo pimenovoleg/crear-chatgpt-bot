@@ -23,7 +23,7 @@ async function main() {
             console.log(`Bot listening on port ${config.BOT_SERVER_PORT}`);
             console.log(`Bot webhook ${config.BOT_WEBHOOK}`);
 
-            await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
+            // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         });
 
         run(bot);
