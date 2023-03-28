@@ -76,11 +76,15 @@ export const createBot = (
         if (ctx.chat?.type === 'private' && text) {
             await ctx.replyWithChatAction('typing');
 
-            const completion = await openai.createChatCompletion({
-                model: 'gpt-3.5-turbo',
-                max_tokens: 4000,
-                messages: [{ role: 'user', content: text }]
-            });
+            const completion = await openai.createChatCompletion(
+                {
+                    model: 'gpt-3.5-turbo',
+                    max_tokens: 4000,
+                    messages: [{ role: 'user', content: text }]
+                },
+                { timeout: 20000 }
+            );
+
             const response = completion.data.choices.at(0)?.message;
             if (response) {
                 await ctx.reply(response.content);
