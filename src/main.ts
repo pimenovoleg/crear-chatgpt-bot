@@ -14,8 +14,6 @@ async function main() {
         sessionStorage: new MemorySessionStorage()
     });
 
-    await bot.init();
-
     //const server = await createServer(bot, container);
 
     if (config.isProd) {
@@ -28,7 +26,7 @@ async function main() {
 
         run(bot);
     } else if (config.isDev) {
-        await bot.api.deleteWebhook();
+        await bot.init();
 
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,
