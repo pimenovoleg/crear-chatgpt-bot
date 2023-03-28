@@ -23,11 +23,9 @@ async function main() {
         //
         //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         // });
-
+        await bot.init();
         run(bot);
     } else if (config.isDev) {
-        await bot.init();
-
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,
             onStart: ({ username }) =>

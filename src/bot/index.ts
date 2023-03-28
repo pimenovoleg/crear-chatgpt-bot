@@ -11,7 +11,7 @@ import { drawConversation } from '@/bot/conversations/draw.conversation';
 import { questionToOpenaiConversation } from '@/bot/conversations/question.openai';
 import { translationConversation } from '@/bot/conversations/translation.conversation';
 import { errorHandler } from '@/bot/handlers';
-import { i18n, updateLogger } from '@/bot/middlewares';
+import { i18n, ignoreOldMessageUpdates, updateLogger } from '@/bot/middlewares';
 import { Container } from '@/container';
 import { openai } from '@/services/openai';
 
@@ -56,6 +56,7 @@ export const createBot = (
         })
     );
     bot.use(sequentialize(getSessionKey));
+    bot.use(ignoreOldMessageUpdates);
     bot.use(conversations());
 
     // conversations
