@@ -23,16 +23,19 @@ async function main() {
         //
         //     // await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         // });
-        bot.api.deleteWebhook().catch((err) => console.log(err));
 
         await bot.init();
 
-        const runner = run(bot);
+        run(bot);
 
-        const stopRunner = () => runner.isRunning() && runner.stop();
-
-        process.once('SIGINT', stopRunner);
-        process.once('SIGTERM', stopRunner);
+        process.once('SIGINT', async () => {
+            logger.info('SIGINT');
+            await bot.api.deleteWebhook({ drop_pending_updates: true });
+        });
+        process.once('SIGTERM', async () => {
+            logger.info('SIGTERM');
+            await bot.api.deleteWebhook({ drop_pending_updates: true });
+        });
     } else if (config.isDev) {
         await bot.start({
             allowed_updates: config.BOT_ALLOWED_UPDATES,
