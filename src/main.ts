@@ -1,5 +1,5 @@
-import express from 'express';
-import { MemorySessionStorage, webhookCallback } from 'grammy';
+import { run } from '@grammyjs/runner';
+import { MemorySessionStorage } from 'grammy';
 
 import { createBot } from '@/bot';
 import { createServer } from '@/server';
@@ -25,6 +25,8 @@ async function main() {
 
             await bot.api.setWebhook(`${config.BOT_WEBHOOK}/${config.BOT_WEBHOOK_SECRET}`);
         });
+
+        run(bot);
     } else if (config.isDev) {
         await bot.api.deleteWebhook();
 
