@@ -43,7 +43,7 @@
         "@grammyjs/types": "^3.0.3",
         "@types/express": "^4.17.17",
         "@types/node": "^18.15.10",
-        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/eslint-plugin": "^5.59.6",
         "@typescript-eslint/parser": "^5.56.0",
         "eslint": "8.36.0",
         "eslint-config-prettier": "8.8.0",
