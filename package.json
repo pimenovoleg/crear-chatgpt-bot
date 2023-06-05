@@ -38,7 +38,7 @@
         "zod": "^3.21.4"
     },
     "devDependencies": {
-        "@commitlint/cli": "^17.5.1",
+        "@commitlint/cli": "^17.6.5",
         "@commitlint/config-conventional": "^17.4.4",
         "@grammyjs/types": "^3.0.3",
         "@types/express": "^4.17.17",
